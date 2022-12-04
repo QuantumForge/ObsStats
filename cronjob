@@ -1,0 +1,8 @@
+#! /bin/bash
+
+. /etc/profile
+
+cd /var/www/html/private/ObsStats
+/var/www/html/private/ObsStats/ObsStats_intervals.py 2>&1 >> /var/www/html/private/ObsStats/ObsStats_intervals.log
+#/home/webmaster/html-private/ObsStats/ObsStats_intervals.py
+
