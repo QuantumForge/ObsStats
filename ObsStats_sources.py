@@ -415,7 +415,7 @@ def process_sources():
             continue
         RA_hrs = source['ra']*24/(2.0*math.pi)
         RA_int = int(RA_hrs)
-        #print source_id,source_type
+        #print(source_id,source_type,RA_hrs,RA_int)
         RA_stats[RA_int]['n_sources'] += 1
         RA_stats[RA_int]['duration'] += source_stats[source_id]['duration']
         RA_stats[RA_int]['awea']['Y'] +=  source_stats[source_id]['awea']['Y']

@@ -16,7 +16,7 @@ import ObsStats_global
 m_global = ObsStats_global
 
 # Parse the command-line options
-usage = "usage: %prog [-s starting date -e ending date][-t file tag][--dark-only]"
+usage = "usage: %prog -s starting date_utc -e ending date_utc [-t file tag][--dark-only]"
 parser = OptionParser(usage)
 parser.add_option("-d", "--dark-only", action="store_true", dest="dk_only", default=False, help="exclude non-observing periods")
 parser.add_option("-e", "--end", dest="end_date", help="the end date")
