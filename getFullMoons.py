@@ -4,11 +4,17 @@
 # required for the ObsStats FullMoons.txt file
 # William.Hanlon@cfa.harvard.edu, 20231017
 
+import argparse
 import datetime
 import ephem
 
+parser = argparse.ArgumentParser(
+        description='Print full moon dates (UTC) and julian dates for a given year')
+parser.add_argument('year', type=int, help='Year to determine full moon dates')
 
-date = datetime.datetime(year=2024, month=1, day=1, hour=12)
+args = parser.parse_args()
+
+date = datetime.datetime(year=args.year, month=1, day=1, hour=12)
 full_moon_dates = []
 
 # pyephem uses UTC dates and times
