@@ -223,7 +223,12 @@ def init_source_type_in_sources():
                 print (("\n** SIMBAD reports %s as source_id|source_type %s **") % \
                     (source_id, reply[0:-2]))
                     #print "DEBUG: SIMBAD return string: %s" % reply
-                source_type = reply[reply.index('|')+1:reply.index('~')-1]
+                try:
+                    source_type = reply[reply.index('|')+1:reply.index('~')-1]
+                except ValueError:
+                    source_type = 'Unknown'
+                    print(("\n** source_id %s source_type lookup FAILS from simbad **\n") % (source_id))
+
                 #source_type = reply[reply.index("b'|'")+1:reply.index("b'~'")-1]
                 ## Catch returned blank but not empty 'reply'
                 if source_type == '':
