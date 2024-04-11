@@ -36,31 +36,31 @@ else:
     end_date = options.end_date
 
 ## If start_date time not specified set to default value
-if not re.search('\d\d:\d\d$',start_date):
+if not re.search(r'\d\d:\d\d$',start_date):
     start_date = start_date+' 14:00'
 ## ... ditto for the end_date time.
-if not re.search('\d\d:\d\d$',end_date):
+if not re.search(r'\d\d:\d\d$',end_date):
     end_date = end_date+' 14:00'
 
 ## Now verify that dates are of a legitimate form, eg 2011-Jan-01 14:00 or 2011-01-01 14:00 ...
 ## ... and generate the start and end datetime values
 ## ... both of the form 2011-Jan-01 14:00
-if (re.search('^\d\d\d\d-[a-z,A-Z]{3}-\d\d \d\d:\d\d$',start_date) \
-    and re.search('^\d\d\d\d-[a-z,A-Z]{3}-\d\d \d\d:\d\d$',end_date)):
+if (re.search(r'^\d\d\d\d-[a-z,A-Z]{3}-\d\d \d\d:\d\d$',start_date) \
+    and re.search(r'^\d\d\d\d-[a-z,A-Z]{3}-\d\d \d\d:\d\d$',end_date)):
     m_global.start_date = dt.datetime.strptime(start_date,"%Y-%b-%d %H:%M")
     m_global.end_date = dt.datetime.strptime(end_date,"%Y-%b-%d %H:%M")
 ## ... or both of the form 2011-01-01 14:00
-elif  (re.search('^\d\d\d\d-\d\d-\d\d \d\d:\d\d$',start_date) \
-    and re.search('^\d\d\d\d-\d\d-\d\d \d\d:\d\d$',end_date)):
+elif  (re.search(r'^\d\d\d\d-\d\d-\d\d \d\d:\d\d$',start_date) \
+    and re.search(r'^\d\d\d\d-\d\d-\d\d \d\d:\d\d$',end_date)):
     m_global.start_date = dt.datetime.strptime(start_date,"%Y-%m-%d %H:%M")
     m_global.end_date = dt.datetime.strptime(end_date,"%Y-%m-%d %H:%M")
 ## ... or both of mixed form
-elif (re.search('^\d\d\d\d-[a-z,A-Z]{3}-\d\d \d\d:\d\d$',start_date) \
-    and re.search('^\d\d\d\d-\d\d-\d\d \d\d:\d\d$',end_date)):
+elif (re.search(r'^\d\d\d\d-[a-z,A-Z]{3}-\d\d \d\d:\d\d$',start_date) \
+    and re.search(r'^\d\d\d\d-\d\d-\d\d \d\d:\d\d$',end_date)):
     m_global.start_date = dt.datetime.strptime(start_date,"%Y-%b-%d %H:%M")
     m_global.end_date = dt.datetime.strptime(end_date,"%Y-%m-%d %H:%M")
-elif  (re.search('^\d\d\d\d-\d\d-\d\d \d\d:\d\d$',start_date) \
-    and re.search('^\d\d\d\d-[a-z,A-Z]{3}-\d\d \d\d:\d\d$',end_date)):
+elif  (re.search(r'^\d\d\d\d-\d\d-\d\d \d\d:\d\d$',start_date) \
+    and re.search(r'^\d\d\d\d-[a-z,A-Z]{3}-\d\d \d\d:\d\d$',end_date)):
     m_global.start_date = dt.datetime.strptime(start_date,"%Y-%m-%d %H:%M")
     m_global.end_date = dt.datetime.strptime(end_date,"%Y-%b-%d %H:%M")
 else:

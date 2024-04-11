@@ -37,7 +37,9 @@ def fetch_runs_frm_db():
 
     try:
         #db_connect=pymysql.connect(host="db.vts",user="readonly",db="VERITAS")
-        db_connect=pymysql.connect(host="romulus.ucsc.edu",user="readonly",db="VERITAS")
+        # Upgrading MacOS to 14.1.1 Sonoma, now need to specify the charset
+        # WFH 20231125
+        db_connect=pymysql.connect(host="romulus.ucsc.edu",user="readonly",db="VERITAS", charset="utf8")
         #db_connect=pymysql.connect(host="remus.ucsc.edu",user="readonly",db="VERITAS")
         #db_connect=pymysql.connect(host="veritase.sao.arizona.edu",user="readonly",db="VERITAS")
     except:
