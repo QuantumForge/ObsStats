@@ -22,9 +22,11 @@ parser.add_option("-d", "--dark-only", action="store_true", dest="dk_only", defa
 parser.add_option("-e", "--end", dest="end_date", help="the end date")
 parser.add_option("-s", "--start", dest="start_date", help="the start date")
 parser.add_option("-t", "--tag", dest="tag", help="an optional file tag")
+parser.add_option("--db", dest="db_host",default="romulus.ucsc.edu", help="database host")
 (options, args) = parser.parse_args()
 
 m_global.dk_only = options.dk_only
+m_global.db_host = options.db_host
 
 ## If start_date OR end_date not specified issue warning then exit
 if options.start_date == None or options.end_date == None :

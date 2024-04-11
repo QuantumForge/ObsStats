@@ -105,7 +105,7 @@ def fetch_sources_frm_dB():
         #db_connect=pymysql.connect(host="veritase.sao.arizona.edu",user="readonly",db="VERITAS")
         # Upgrading MacOS to 14.1.1 Sonoma, now need to specify the charset
         # WFH 20231125
-        db_connect=pymysql.connect(host="romulus.ucsc.edu",user="readonly",db="VERITAS", charset="utf8")
+        db_connect=pymysql.connect(host=db_host, user="readonly", db="VERITAS", charset="utf8")
         #db_connect=pymysql.connect(host="remus.ucsc.edu",user="readonly",db="VERITAS")
     except:
         sys.exit("Failed to connect to db in read_sources!\n")

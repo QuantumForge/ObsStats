@@ -22,6 +22,9 @@ CSVFILE = None
 #PCKLFILE = None
 RESFILE = None
 
+# which host to use for database connections
+db_host = 'romulus.ucsc.edu'
+
 ## An option to exclude all periods when the moon is up, however bright
 dk_only = None
 ## Start and end of interval dates and a file_tag generated therefrom.
