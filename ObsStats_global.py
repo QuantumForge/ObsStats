@@ -64,12 +64,12 @@ isZENITH = re.compile('ZENITH',re.IGNORECASE)
 isANHER = re.compile('AN HER',re.IGNORECASE)
 isCRAB = re.compile('^CRAB',re.IGNORECASE)
 isCygHS = re.compile('Cygnus *HS',re.IGNORECASE)
-isGRBv1 = re.compile('^GRB *\d\d\d\d\d\d',re.IGNORECASE)   #GRB123456
-isGRBv2 = re.compile('^GRB *(\d\d|\d\d\d\d)-\d\d-\d\d',re.IGNORECASE) #GRB 1234-56-78 | GRB 12-34-56
+isGRBv1 = re.compile(r'^GRB *\d\d\d\d\d\d',re.IGNORECASE)   #GRB123456
+isGRBv2 = re.compile(r'^GRB *(\d\d|\d\d\d\d)-\d\d-\d\d',re.IGNORECASE) #GRB 1234-56-78 | GRB 12-34-56
 isIC433 = re.compile('IC *433',re.IGNORECASE)
-isMilSURVEY = re.compile('^MilSS *\d{2,3}',re.IGNORECASE)
+isMilSURVEY = re.compile(r'^MilSS *\d{2,3}',re.IGNORECASE)
 isREGULUS = re.compile('^Regulus',re.IGNORECASE)
-isSURVEY = re.compile('^SS *\d{2,3}',re.IGNORECASE)
+isSURVEY = re.compile(r'^SS *\d{2,3}',re.IGNORECASE)
 isTHETA1 = re.compile('^Theta1',re.IGNORECASE)
 
 ## DICT FOR SOURCE_TYPES

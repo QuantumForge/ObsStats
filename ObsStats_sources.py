@@ -207,8 +207,8 @@ def init_source_type_in_sources():
         ## ... or interrogate the SIMBAD database to determine the source_type
         else:
             id = source_id
-            id = re.sub('\+','%2B',id)
-            id = re.sub('\-','%2D',id)
+            id = re.sub(r'\+','%2B',id)
+            id = re.sub(r'\-','%2D',id)
             id = re.sub(' ','%20',id)
             try:
                 f = urlopen(("%s%s%s")%(simbad,'%0a',id))
