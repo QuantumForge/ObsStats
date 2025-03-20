@@ -43,7 +43,7 @@ def fetch_runs_frm_db():
         #db_connect=pymysql.connect(host="remus.ucsc.edu",user="readonly",db="VERITAS")
         #db_connect=pymysql.connect(host="veritase.sao.arizona.edu",user="readonly",db="VERITAS")
     except:
-        sys.exit("Failed to connect to db in read_runs!\n")
+        sys.exit(f"Failed to connect to db host ({db_host}) in read_runs!\n")
 
     cursor=db_connect.cursor()
 
