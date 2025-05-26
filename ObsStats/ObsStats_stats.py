@@ -21,7 +21,7 @@ import re
 #import time
 
 ## Import global variables into this namespace
-from ObsStats_global import *
+from ObsStats.ObsStats_global import *
 
 ## Select the graphics format file extension
 #fext = '.svg'

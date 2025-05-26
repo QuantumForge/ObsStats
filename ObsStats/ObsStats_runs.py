@@ -9,11 +9,11 @@ import sys
 #import time
 
 ## Import global variables into this namespace
-from ObsStats_global import *
+from ObsStats.ObsStats_global import *
 
 # Import functions into their own namespace
 #import ObsStats_days
-import ObsStats_ephem
+from ObsStats import ObsStats_ephem
 #import ObsStats_runs
 #import ObsStats_sources
 
@@ -36,12 +36,10 @@ def fetch_runs_frm_db():
         sys.exit('Failed to import pymysql in read_runs!\n')
 
     try:
-        #db_connect=pymysql.connect(host="db.vts",user="readonly",db="VERITAS")
         # Upgrading MacOS to 14.1.1 Sonoma, now need to specify the charset
         # WFH 20231125
-        db_connect=pymysql.connect(host=db_host ,user="readonly", db="VERITAS", charset="utf8")
-        #db_connect=pymysql.connect(host="remus.ucsc.edu",user="readonly",db="VERITAS")
-        #db_connect=pymysql.connect(host="veritase.sao.arizona.edu",user="readonly",db="VERITAS")
+        db_connect=pymysql.connect(host=db_host ,user=db_user, db=db_name,
+        charset="utf8")
     except:
         sys.exit(f"Failed to connect to db host ({db_host}) in read_runs!\n")
 

@@ -10,10 +10,31 @@ import os
 import re
 import sys
 #import string
+import tomllib
+import importlib.resources
+from ObsStats import data
 
 # Import global variables into this namespace
-import ObsStats_global
+from ObsStats import ObsStats_global
 m_global = ObsStats_global
+
+ini_file = importlib.resources.files(data).joinpath('ObsStats.ini')
+with open(ini_file, 'rb') as f:
+    ini_data = tomllib.load(f)
+
+for key in ini_data.keys():
+    if key == 'database':
+        for database_key in ini_data['database'].keys():
+            if database_key == 'host':
+                m_global.db_host = ini_data['database']['host']
+            elif database_key == 'user':
+                m_global.db_user = ini_data['database']['user']
+            elif database_key == 'db_name':
+                m_global.db_name = ini_data['database']['db_name']
+    elif key == 'simbad':
+        for simbad_key in ini_date['simbad'].keys():
+            if simbad_key == 'host':
+                m_global.simbad_host = ini_data['simbad']['host']
 
 # Parse the command-line options
 usage = "usage: %prog -s starting date_utc -e ending date_utc [-t file tag][--dark-only]"
@@ -22,11 +43,35 @@ parser.add_option("-d", "--dark-only", action="store_true", dest="dk_only", defa
 parser.add_option("-e", "--end", dest="end_date", help="the end date")
 parser.add_option("-s", "--start", dest="start_date", help="the start date")
 parser.add_option("-t", "--tag", dest="tag", help="an optional file tag")
-parser.add_option("--db", dest="db_host",default="romulus.ucsc.edu", help="database host")
+parser.add_option("--db-host", default=None, help="VERITAS database host")
+parser.add_option("--db-name", default=None, help="VERITAS database name")
+parser.add_option("--db-user", default=None, help="VERITAS database username")
+parser.add_option("--simbad-host", default=None, help="Host for SIMBAD lookups.")
 (options, args) = parser.parse_args()
 
 m_global.dk_only = options.dk_only
-m_global.db_host = options.db_host
+if options.db_host is not None:
+    m_global.db_host = options.db_host
+if options.db_name is not None:
+    m_global.db_name = options.db_name
+if options.db_user is not None:
+    m_global.db_user = options.db_user
+if options.simbad_host is not None:
+    m_global.simbad_host = options.simbad_host
+
+start_ok = True
+if not m_global.db_host:
+    print('Set DB hostname.', file=sys.stderr)
+    start_ok = False
+if not m_global.db_name:
+    print('Set DB name.', file=sys.stderr)
+    start_ok = False
+if not m_global.db_user:
+    print('Set DB user name.', file=sys.stderr)
+    start_ok = False
+
+if not start_ok:
+    sys.exit(1)
 
 ## If start_date OR end_date not specified issue warning then exit
 if options.start_date == None or options.end_date == None :
@@ -84,12 +129,12 @@ m_global.CSVFILE = open('Results/ObsStats_'+m_global.file_tag+'.csv',"w")
 m_global.RESFILE = open('Results/ObsStats_'+m_global.file_tag+'.txt',"w")
 
 ## Import functions into their own namespace
-import ObsStats_days
+from ObsStats import ObsStats_days
 #import ObsStats_ephem
 #import ObsStats_pckl
-import ObsStats_runs
-import ObsStats_sources
-import ObsStats_stats
+from ObsStats import ObsStats_runs
+from ObsStats import ObsStats_sources
+from ObsStats import ObsStats_stats
 
 ## Create some simple aliases
 m_days = ObsStats_days

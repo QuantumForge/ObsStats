@@ -22,8 +22,23 @@ CSVFILE = None
 #PCKLFILE = None
 RESFILE = None
 
+# these globals need to be set on the command line or
+# in the toml file ObsStats/data/ObsStats.ini
 # which host to use for database connections
-db_host = 'romulus.ucsc.edu'
+#
+# format of ObsStats.ini:
+# [database]
+# host = "<hostname>"
+# user = "<username>"
+# db_name = "<db_name>"
+# [simbad]
+# host = "<hostname>"
+#
+db_host = None
+db_user = None
+db_name = None
+# host used for simbad lookups
+simbad_host = "simbad.u-strasbg.fr"
 
 ## An option to exclude all periods when the moon is up, however bright
 dk_only = None

@@ -10,13 +10,13 @@ import datetime as dt
 #import time
 
 ## Import global variables into this namespace
-from ObsStats_global import *
+from ObsStats.ObsStats_global import *
 
 ## Import functions into their own namespace
 #import ObsStats_days
-import ObsStats_ephem
+from ObsStats import ObsStats_ephem
 #import ObsStats_runs
-import ObsStats_sources
+from ObsStats import ObsStats_sources
 
 ## Create some simple aliases
 #m_days = ObsStats_days

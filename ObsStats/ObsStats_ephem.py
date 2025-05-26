@@ -12,12 +12,15 @@ import datetime as dt
 #import string
 #import time
 
+import importlib.resources
+from . import data
+
 # From the xephem library
 from ephem import *
 
 ## Import global variables into this namespace
 #from ObsStats_global import flwo, full_moons, max_moon_phase
-from ObsStats_global import flwo, full_moons
+from ObsStats.ObsStats_global import flwo, full_moons
 
 ## Import functions into their own namespace
 #import ObsStats_days
@@ -223,7 +226,8 @@ def fetchFullMoons():
     e.g., '2000-Jan-21 04:42'    2451564.696
     throwing away the julian date, convert the time string to a datetime object.
     """
-    FMFILE = open('FullMoons.txt','r')
+    inp_file = importlib.resources.files(data).joinpath('FullMoons.txt')
+    FMFILE = open(inp_file,'r')
     ## Read the entire file into the destination array
     lines = FMFILE.readlines()
     ## Skip the first line which contains header info

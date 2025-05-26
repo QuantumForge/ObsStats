@@ -11,7 +11,11 @@ import sys
 from urllib.request import urlopen
 
 ## Import global variables into this namespace
-from ObsStats_global import *
+from ObsStats.ObsStats_global import *
+
+# importlib is used to give access to files in the data directory
+import importlib.resources
+from . import data
 
 ## Import functions into their own namespace
 #import ObsStats_days
@@ -102,11 +106,10 @@ def fetch_sources_frm_dB():
         sys.exit('Failed to import pymysql in read_sources!\n')
 
     try:
-        #db_connect=pymysql.connect(host="veritase.sao.arizona.edu",user="readonly",db="VERITAS")
         # Upgrading MacOS to 14.1.1 Sonoma, now need to specify the charset
         # WFH 20231125
-        db_connect=pymysql.connect(host=db_host, user="readonly", db="VERITAS", charset="utf8")
-        #db_connect=pymysql.connect(host="remus.ucsc.edu",user="readonly",db="VERITAS")
+        db_connect=pymysql.connect(host=db_host, user=db_user, db=db_name,
+                                   charset="utf8")
     except:
         sys.exit("Failed to connect to db in read_sources!\n")
 
@@ -147,7 +150,8 @@ def init_source_type_in_sources():
 
     ## Open and read the SourcesNTypes file into the destination array
     ## e.g., 1RXS J044127.8+150455,BLLac
-    SNTFILE = open('SourcesNTypes.txt','r')
+    inp_file = importlib.resources.files(data).joinpath('SourcesNTypes.txt')
+    SNTFILE = open(inp_file,'r')
     lines = SNTFILE.readlines()
     SNTFILE.close()
     prflg = True
@@ -166,14 +170,13 @@ def init_source_type_in_sources():
         else:
             #if prflg: print ("\n") ; prflg = False
             ## If the source_id does not exist in sources then create it
-            print (("\n** source_id %s of type_id %s not found in sources dB **\n") % (source_id, type_id))
+            print (("\n** source_id %s of type_id %s not found in sources dB **\n") % (source_id, type_id), file=sys.stderr)
             sources[source_id] = {'source_id':source_id, 'desc':'', \
                 'ra':999.0, 'decl':999.0, 'epoch':999.0, \
                 'source_type':type_id}
-
-    #simbad = "http://simbad.u-strasbg.fr/simbad/sim-script?script=%20output%20script=off%20error=off%20console=off%0aformat%20object%20%22%25IDLIST(1)%7c%25OTYPE%22"
-    simbad = "http://simbad.cfa.harvard.edu/simbad/sim-script?script=%20output%20script=off%20error=off%20console=off%0aformat%20object%20%22%25IDLIST(1)%7c%25OTYPE%22"
-
+    
+    # simbad_host defined in ObsStats_global
+    simbad = 'http://' + simbad_host + '/simbad/sim-script?script=%20output%20script=off%20error=off%20console=off%0aformat%20object%20%22%25IDLIST(1)%7c%25OTYPE%22'
     prflg = True
     for source_id, source in sources.items():
         ## Test if we've set the source_type above
@@ -215,37 +218,40 @@ def init_source_type_in_sources():
                 reply = f.read().decode('utf-8')
             except:
                 #if prflg: print ("\n") ; prflg = False
-                print (("\n** simbad call for source_id %s failed **\n") % (source_id))
+                print(("\n** simbad call for source_id %s failed **\n") %
+                      (source_id), file=sys.stderr)
                 reply = ''
             if reply == '':
                 source_type = 'Unknown'
             else:
                 #if prflg: print ("\n") ; prflg = False
                 # NB: the string value returned by SIMBAD is terminated with two <cr>s
-                print (("\n** SIMBAD reports %s as source_id|source_type %s **") % \
-                    (source_id, reply[0:-2]))
+                print(("\n** SIMBAD reports %s as source_id|source_type %s **") %
+                      (source_id, reply[0:-2]), file=sys.stderr)
                     #print "DEBUG: SIMBAD return string: %s" % reply
                 try:
                     source_type = reply[reply.index('|')+1:reply.index('~')-1]
                 except ValueError:
                     source_type = 'Unknown'
-                    print(("\n** source_id %s source_type lookup FAILS from simbad **\n") % (source_id))
+                    print(("\n** source_id %s source_type lookup FAILS from simbad **\n") % (source_id), file=sys.stderr)
 
                 #source_type = reply[reply.index("b'|'")+1:reply.index("b'~'")-1]
                 ## Catch returned blank but not empty 'reply'
                 if source_type == '':
                     source_type = 'Unknown'
                     #if prflg: print ("\n") ; prflg = False
-                    print (("\n** source_id %s returns blank from simbad **\n") % (source_id))
+                    print(("\n** source_id %s returns blank from simbad **\n") %
+                          (source_id), file=sys.stderr)
         source['source_type'] = source_type
         ## If source type not found then assign it to catchall
         if source_type not in source_types:
             #if prflg: print ("\n") ; prflg = False
-            print (("\n** source_type %s of source_id %s not found in source_types **\n") % \
-                (source_type, source_id))
+            print(("\n** source_type %s of source_id %s not found in source_types **\n") %
+                  (source_type, source_id), file=sys.stderr)
             source_types[source_type] = ['Unknown','Unknown']
         if source_type == 'Unknown':
-            print (("\n** source_id %s of unknown source_type **\n") % (source_id))
+            print (("\n** source_id %s of unknown source_type **\n")
+                   % (source_id), file=sys.stderr)
     return
 
 def update_n_flag_sources():
@@ -266,7 +272,8 @@ def update_n_flag_sources():
             try:
                 del sources[source_id]
             except:
-                print (("\n** source_id %s not found in sources **\n") % (source_id))
+                print (("\n** source_id %s not found in sources **\n") %
+                       (source_id), file=sys.stderr)
 
     index = 1
     for source_id, source in list(sources.items()):
