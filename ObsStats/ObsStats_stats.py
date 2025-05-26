@@ -712,7 +712,7 @@ def print_RA_dist():
     #plot_stats_oneBar(fig,sp, \
         #('Weather (obs only)','Duration (h)'), \
         #weather,stats_keys=weather_keys)
-    fig.savefig(f'{output_dir}/RA_dists_{file_tag}{ext}')
+    fig.savefig(f'{output_dir}/RA_dists_{file_tag}{fext}')
 
     return fig
 

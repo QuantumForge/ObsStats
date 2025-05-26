@@ -29,11 +29,11 @@ for key in ini_data.keys():
                     database_key == 'db_name':
                 m_global.db_host = ini_data[key][database_key]
     elif key == 'simbad':
-        for simbad_key in ini_date[key].keys():
+        for simbad_key in ini_data[key].keys():
             if simbad_key == 'host':
                 m_global.simbad_host = ini_data[key][simbad_key]
     elif key == 'output':
-        for output_key in ini_date[key].keys():
+        for output_key in ini_data[key].keys():
             if output_key == 'directory':
                 m_global.output_dir = ini_data[key][output_key]
 
