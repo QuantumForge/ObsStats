@@ -24,17 +24,18 @@ with open(ini_file, 'rb') as f:
 
 for key in ini_data.keys():
     if key == 'database':
-        for database_key in ini_data['database'].keys():
-            if database_key == 'host':
-                m_global.db_host = ini_data['database']['host']
-            elif database_key == 'user':
-                m_global.db_user = ini_data['database']['user']
-            elif database_key == 'db_name':
-                m_global.db_name = ini_data['database']['db_name']
+        for database_key in ini_data[key].keys():
+            if database_key == 'host' or database_key == 'user' or \
+                    database_key == 'db_name':
+                m_global.db_host = ini_data[key][database_key]
     elif key == 'simbad':
-        for simbad_key in ini_date['simbad'].keys():
+        for simbad_key in ini_date[key].keys():
             if simbad_key == 'host':
-                m_global.simbad_host = ini_data['simbad']['host']
+                m_global.simbad_host = ini_data[key][simbad_key]
+    elif key == 'output':
+        for output_key in ini_date[key].keys():
+            if output_key == 'directory':
+                m_global.output_dir = ini_data[key][output_key]
 
 # Parse the command-line options
 usage = "usage: %prog -s starting date_utc -e ending date_utc [-t file tag][--dark-only]"
@@ -47,6 +48,8 @@ parser.add_option("--db-host", default=None, help="VERITAS database host")
 parser.add_option("--db-name", default=None, help="VERITAS database name")
 parser.add_option("--db-user", default=None, help="VERITAS database username")
 parser.add_option("--simbad-host", default=None, help="Host for SIMBAD lookups.")
+parser.add_option("--output-dir", default=None,
+                  help="Directory where output is written")
 (options, args) = parser.parse_args()
 
 m_global.dk_only = options.dk_only
@@ -58,6 +61,8 @@ if options.db_user is not None:
     m_global.db_user = options.db_user
 if options.simbad_host is not None:
     m_global.simbad_host = options.simbad_host
+if options.output_dir is not None:
+    m_global.output_dir = options.output_dir
 
 start_ok = True
 if not m_global.db_host:
@@ -124,14 +129,14 @@ else:
     m_global.file_tag = options.tag
 
 ## Open the csv, txt and optionally pickle results files
-m_global.CSVFILE = open('Results/ObsStats_'+m_global.file_tag+'.csv',"w")
+m_global.CSVFILE = open(f'{m_global.output_dir}/ObsStats_{m_global.file_tag}.csv',"w")
 #m_global.PCKLFILE = open('ObsStatsPckl_'+m_global.file_tag+'.pckl',"w")
-m_global.RESFILE = open('Results/ObsStats_'+m_global.file_tag+'.txt',"w")
+m_global.RESFILE = open(f'{m_global.output_dir}/ObsStats_{m_global.file_tag}.txt',"w")
 
 ## Import functions into their own namespace
 from ObsStats import ObsStats_days
-#import ObsStats_ephem
-#import ObsStats_pckl
+#from ObsStats import ObsStats_ephem
+#from ObsStats import ObsStats_pckl
 from ObsStats import ObsStats_runs
 from ObsStats import ObsStats_sources
 from ObsStats import ObsStats_stats

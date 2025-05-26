@@ -39,6 +39,8 @@ db_user = None
 db_name = None
 # host used for simbad lookups
 simbad_host = "simbad.u-strasbg.fr"
+# directory where output is written
+output_dir = "Results"
 
 ## An option to exclude all periods when the moon is up, however bright
 dk_only = None

@@ -621,7 +621,7 @@ def print_observing_mode_dist():
     plot_stats_twoBar(fig,sp, \
         ['Observing Mode','N Runs','Duration (h)'], \
         observing_mode)
-    fig.savefig('Results/ObservingMode_'+file_tag+fext)
+    fig.savefig(f'{output_dir}/ObservingMode_{file_tag}{fext}')
 
     return fig
 
@@ -712,7 +712,7 @@ def print_RA_dist():
     #plot_stats_oneBar(fig,sp, \
         #('Weather (obs only)','Duration (h)'), \
         #weather,stats_keys=weather_keys)
-    fig.savefig('Results/RA_dists_'+file_tag+fext)
+    fig.savefig(f'{output_dir}/RA_dists_{file_tag}{ext}')
 
     return fig
 
@@ -741,7 +741,7 @@ def print_run_duration_dist():
         textvals[1].append(str(min))
     textvals[2] = 'N Runs'
     plot_oneBar(fig,sp,textvals,range(32),run_duration_dist)
-    fig.savefig('Results/RunDurations_'+file_tag+fext)
+    fig.savefig(f'{output_dir}/RunDurations_{file_tag}{fext}')
 
     return fig
 
@@ -764,7 +764,7 @@ def print_run_type_dist():
     plot_stats_twoBar(fig,sp, \
         ['Run Type','N Runs','Duration (h)'], \
         run_type)
-    fig.savefig('Results/RunType_'+file_tag+fext)
+    fig.savefig(f'{output_dir}/RunType_{file_tag}{fext}')
 
     return fig
 
@@ -855,7 +855,7 @@ def print_source_stats_dist():
         plot_stats_stackedWeatherBar(fig,sp, \
             ('Sources','Duration (h)'), \
             tmp_stats)
-        fig.savefig('Results/SourceStats_'+file_tag+fext)
+        fig.savefig(f'{output_dir}/SourceStats_{file_tag}{fext}')
 
         return fig
 
@@ -886,7 +886,7 @@ def print_source_stats_dist():
         plot_stats_stackedWeatherBar(figaupp,spaupp, \
             ('Sources_A-UP','Duration (h)'), \
             auppstat)
-        figaupp.savefig('Results/SourceStats_A-UP_'+file_tag+fext)
+        figaupp.savefig(f'{output_dir}/SourceStats_A-UP_{file_tag}{fext}')
         figzdwn = plt.figure()
         #fig.subplots_adjust(wspace=0.75)
         #fig.subplots_adjust(hspace=0.5)
@@ -896,7 +896,7 @@ def print_source_stats_dist():
         plot_stats_stackedWeatherBar(figzdwn,spzdwn, \
             ('Sources_Z-DWN','Duration (h)'), \
             zdwnstat)
-        figzdwn.savefig('Results/SourceStats_Z-DWN_'+file_tag+fext)
+        figzdwn.savefig(f'{output_dir}/SourceStats_Z-DWN_{file_tag}{fext}')
 
         #a2lkeys = []
         #m2zkeys = []
@@ -924,7 +924,7 @@ def print_source_stats_dist():
         #plot_stats_stackedWeatherBar(figa2l,spa2l, \
             #('Sources_A-L','Duration (h)'), \
             #a2lstat)
-        #figa2l.savefig('Results/SourceStats_A-L_'+file_tag+fext)
+        #figa2l.savefig(f'{output_dir}/SourceStats_A-L_{file_tag}{fext}')
         #figm2z = plt.figure()
         ##fig.subplots_adjust(wspace=0.75)
         ##fig.subplots_adjust(hspace=0.5)
@@ -934,7 +934,7 @@ def print_source_stats_dist():
         #plot_stats_stackedWeatherBar(figm2z,spm2z, \
             #('Sources_M-Z','Duration (h)'), \
             #m2zstat)
-        #figm2z.savefig('Results/SourceStats_M-Z_'+file_tag+fext)
+        #figm2z.savefig(f'{output_dir}/SourceStats_M-Z_{file_tag}{fext}')
 
     #return (figa2l, figm2z)
     return (figaupp, figzdwn)
@@ -975,12 +975,12 @@ def print_source_class_stats_dist():
     plot_stats_stackedWeatherBar(fig1,sp, \
         ('Source Classes','Duration (h)'), \
         tmp_stats)
-    fig1.savefig('Results/SourceClassStats_'+file_tag+fext)
+    fig1.savefig(f'{output_dir}/SourceClassStats_{file_tag}{fext}')
 
     fig2 = plt.figure(figsize=(6,6))
     titles = ['Source Classes']
     plot_stats_Pie(fig2,sp,titles,tmp_stats,stats_keys=None,min_frac=0.02)
-    fig2.savefig('Results/SourceClassStatsPie_'+file_tag+fext)
+    fig2.savefig(f'{output_dir}/SourceClassStatsPie_{file_tag}{fext}')
 
     return (fig1, fig2)
 
@@ -1020,12 +1020,12 @@ def print_source_type_stats_dist():
     plot_stats_stackedWeatherBar(fig1,sp, \
         ('Source Types','Duration (h)'), \
         tmp_stats)
-    fig1.savefig('Results/SourceTypeStats_'+file_tag+fext)
+    fig1.savefig(f'{output_dir}/SourceTypeStats_{file_tag}{fext}')
 
     fig2 = plt.figure(figsize=(6,6))
     titles = ['Source Types']
     plot_stats_Pie(fig2,sp,titles,tmp_stats,stats_keys=None,min_frac=0.02)
-    fig2.savefig('Results/SourceTypeStatsPie_'+file_tag+fext)
+    fig2.savefig(f'{output_dir}/SourceTypeStatsPie_{file_tag}{fext}')
 
     return (fig1, fig2)
 
@@ -1087,7 +1087,7 @@ def print_weather_dist():
     plot_stats_oneBar(fig,sp, \
         ('Weather (obs only)','Duration (h)'), \
         weather,stats_keys=weather_keys)
-    fig.savefig('Results/Weather_'+file_tag+fext)
+    fig.savefig(f'{output_dir}/Weather_{file_tag}{fext}')
 
     return fig
 
@@ -1124,7 +1124,7 @@ def print_days_dist():
     ax1.set_xlim(0.0,1.0)
     #ax.bar(xvals+0.025,ddc_hist,0.025)
     ax1.set_title("Data Duty Cycle")
-    fig1.savefig('Results/DataDutyCycle_'+file_tag+fext)
+    fig1.savefig(f'{output_dir}/DataDutyCycle_{file_tag}{fext}')
 
     fig2 = plt.figure()
     ax2 = fig2.add_subplot(111)
@@ -1133,7 +1133,7 @@ def print_days_dist():
     ax2.set_xlim(0.0,1.0)
     #ax.bar(xvals+0.025,ddc_hist,0.025)
     ax2.set_title("Observing Duty Cycle")
-    fig2.savefig('Results/ObservingDutyCycle_'+file_tag+fext)
+    fig2.savefig(f'{output_dir}/ObservingDutyCycle_{file_tag}{fext}')
 
     fig3 = plt.figure()
     ax3 = fig3.add_subplot(111)
@@ -1144,15 +1144,15 @@ def print_days_dist():
     ax3.set_ylim(0.0,1.0)
     ax3.set_title("Data vs Observing Duty Cycle")
     ax3.legend(('good','bad'))
-    fig3.savefig('Results/DataVsObservingDutyCycle_'+file_tag+fext)
+    fig3.savefig(f'{output_dir}/DataVsObservingDutyCycle_{file_tag}{fext}')
 
     return (fig1, fig2, fig3)
 
 
 def close_stats():
-    #fig1.savefig('Results/Stats-1.pdf')
-    #fig2.savefig('Results/Stats-2.pdf')
-    #fig3.savefig('Results/Stats-3.pdf')
-    #fig4.savefig('Results/Stats-4.pdf')
+    #fig1.savefig(f'{output_dir}/Stats-1.pdf')
+    #fig2.savefig(f'{output_dir}/Stats-2.pdf')
+    #fig3.savefig(f'{output_dir}/Stats-3.pdf')
+    #fig4.savefig(f'{output_dir}/Stats-4.pdf')
 
     return
