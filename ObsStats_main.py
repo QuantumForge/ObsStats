@@ -25,9 +25,12 @@ with open(ini_file, 'rb') as f:
 for key in ini_data.keys():
     if key == 'database':
         for database_key in ini_data[key].keys():
-            if database_key == 'host' or database_key == 'user' or \
-                    database_key == 'db_name':
+            if database_key == 'host':
                 m_global.db_host = ini_data[key][database_key]
+            elif database_key == 'user':
+                m_global.db_user = ini_data[key][database_key]
+            elif database_key == 'db_name':
+                m_global.db_name = ini_data[key][database_key]
     elif key == 'simbad':
         for simbad_key in ini_data[key].keys():
             if simbad_key == 'host':
