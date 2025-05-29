@@ -120,6 +120,11 @@ def fetch_sources_frm_dB():
     sources_IndB = cursor.fetchall()
 
     for source in sources_IndB:
+        # if the source is not in the list of sources in the runs being
+        # examined, but bother adding it to the list.
+        # WFH 20250528
+        if source[0] not in sources_in_runs:
+            continue
         source_id = source[0]
         sources[source_id] = {'source_id':source_id, 'desc': source[1], \
             'ra': source[2], 'decl': source[3], 'epoch': source[4], \
